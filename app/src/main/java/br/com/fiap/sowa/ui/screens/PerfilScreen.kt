@@ -1,42 +1,24 @@
 package br.com.fiap.sowa.ui.screens
 
 import androidx.compose.runtime.Composable
-import androidx.compose.material3.Text
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
+import br.com.fiap.sowa.ui.components.Header
+import br.com.fiap.sowa.ui.components.NavBar
 
 @Composable
-fun PerfilScreen(
-    navController: NavController
-) {
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(Color(0xFF329F6B))
-        .padding(32.dp)
-    ){
-        Text(
-            text = "PERFIL - ",
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.White
-        )
-        Button(
-            onClick = { navController.navigate("home") },
-            colors = ButtonDefaults.buttonColors(Color.White),
-            modifier = Modifier.align(Alignment.Center)
-        ) {
-            Text(text = "Voltar", fontSize = 20.sp, color = Color.Blue)
-        }
+fun PerfilScreen( navController: NavController ) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier .fillMaxSize()
+    ) {
+        Header()
+        //Conteúdo profile
+        NavBar(navController)
     }
 }
