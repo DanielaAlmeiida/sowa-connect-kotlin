@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import br.com.fiap.sowa.ui.components.NavBar
 import br.com.fiap.sowa.ui.navigation.SetupNavigation
 
 import br.com.fiap.sowa.ui.theme.SowaTheme
@@ -23,7 +22,6 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    NavBar()
                     SetupNavigation()
                 }
             }

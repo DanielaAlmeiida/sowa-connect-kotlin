@@ -57,7 +57,7 @@ fun LoginScreen(navController: NavController) {
                 .height(800.dp)
         ) {
             Button(
-                onClick = { navController.navigate("Home") },
+                onClick = { navController.navigate("home") },
                 colors = ButtonDefaults.buttonColors(Color.White)
             ) {
                 Text(text = "ENTRAR", fontSize = 20.sp, color = Color.Blue)
