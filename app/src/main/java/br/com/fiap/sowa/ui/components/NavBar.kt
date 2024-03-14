@@ -11,8 +11,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.Icon
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import br.com.fiap.sowa.R
 
@@ -36,9 +38,20 @@ fun NavBar(navController: NavController, perfilButton: String) {
                 .weight(1f)
                 //.padding(horizontal = 4.dp) // Ajuste o espaçamento entre os botões conforme necessário
         ) {
-            Text(text = "Home", fontSize = 12.sp, color = Color.White)
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.weight(1f)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.home),
+                    contentDescription = null,
+                    tint = Color.White,
+                    modifier = Modifier.size(30.dp)
+                )
+                Spacer(modifier = Modifier.height(3.dp))
+                Text(text = "Home", fontSize = 12.sp, color = Color.White)
+            }
         }
-
         Button(
             onClick = { navController.navigate("connections") },
             colors = ButtonDefaults.buttonColors(if (perfilButton == "connections") Color.Blue else colorResource(id = R.color.bluePrincipal)),
@@ -48,7 +61,19 @@ fun NavBar(navController: NavController, perfilButton: String) {
                 .weight(1f)
                 //.padding(horizontal = 4.dp) // Ajuste o espaçamento entre os botões conforme necessário
         ) {
-            Text(text = "Connections", fontSize = 12.sp, color = Color.White)
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.weight(1f)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.connection),
+                    contentDescription = null,
+                    tint = Color.White,
+                    modifier = Modifier.size(30.dp)
+                )
+                Spacer(modifier = Modifier.height(3.dp))
+                Text(text = "Connections", fontSize = 12.sp, color = Color.White)
+            }
         }
 
         Button(
@@ -60,7 +85,19 @@ fun NavBar(navController: NavController, perfilButton: String) {
                 .weight(1f)
                 //.padding(horizontal = 4.dp) // Ajuste o espaçamento entre os botões conforme necessário
         ) {
-            Text(text = "Perfil", fontSize = 12.sp, color = Color.White)
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.weight(1f)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.perfil),
+                    contentDescription = null,
+                    tint = Color.White,
+                    modifier = Modifier.size(30.dp)
+                )
+                Spacer(modifier = Modifier.height(3.dp))
+                Text(text = "Perfil", fontSize = 12.sp, color = Color.White)
+            }
         }
     }
 }
