@@ -8,18 +8,17 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 import br.com.fiap.sowa.R
 
-@Preview(showBackground = true, showSystemUi = true)
+//@Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun NavBar() {
+fun NavBar(navController: NavController) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -29,33 +28,33 @@ fun NavBar() {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Button(
-            onClick = { /* navController.navigate("home") */},
+            onClick = { navController.navigate("home") },
             colors = ButtonDefaults.buttonColors(Color.White),
             modifier = Modifier
                 .weight(1f)
-                .padding(horizontal = 4.dp) // Ajuste o espaçamento entre os botões conforme necessário
+                //.padding(horizontal = 4.dp) // Ajuste o espaçamento entre os botões conforme necessário
         ) {
-            Text(text = "Home", fontSize = 12.sp, color = Color.Blue)
+            Text(text = "Home", fontSize = 12.sp, color = Color.Gray)
         }
 
         Button(
-            onClick = { /*navController.navigate("connections")*/ },
+            onClick = { navController.navigate("connections") },
             colors = ButtonDefaults.buttonColors(Color.White),
             modifier = Modifier
                 .weight(1f)
-                .padding(horizontal = 4.dp) // Ajuste o espaçamento entre os botões conforme necessário
+                //.padding(horizontal = 4.dp) // Ajuste o espaçamento entre os botões conforme necessário
         ) {
-            Text(text = "Connections", fontSize = 12.sp, color = Color.Blue)
+            Text(text = "Connections", fontSize = 12.sp, color = Color.Gray)
         }
 
         Button(
-            onClick = { /*navController.navigate("perfil")*/ },
+            onClick = { navController.navigate("perfil") },
             colors = ButtonDefaults.buttonColors(Color.White),
             modifier = Modifier
                 .weight(1f)
-                .padding(horizontal = 4.dp) // Ajuste o espaçamento entre os botões conforme necessário
+                //.padding(horizontal = 4.dp) // Ajuste o espaçamento entre os botões conforme necessário
         ) {
-            Text(text = "Perfil", fontSize = 12.sp, color = Color.Blue)
+            Text(text = "Perfil", fontSize = 12.sp, color = Color.Gray)
         }
     }
 
