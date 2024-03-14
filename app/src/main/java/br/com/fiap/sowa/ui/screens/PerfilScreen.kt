@@ -19,6 +19,6 @@ fun PerfilScreen( navController: NavController ) {
     ) {
         Header()
         //Conteúdo profile
-        NavBar(navController)
+        NavBar(navController, "perfil")
     }
 }

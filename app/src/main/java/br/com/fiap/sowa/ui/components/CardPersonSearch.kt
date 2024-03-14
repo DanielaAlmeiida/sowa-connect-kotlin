@@ -1,5 +1,7 @@
 package br.com.fiap.sowa.ui.components
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -8,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -17,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -25,13 +29,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.fiap.sowa.R
 
-@Preview(showBackground = true, showSystemUi = true)
+//@Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun ProfileCard() {
+fun ProfileCard(nome: String, areas: String, estado: String, avaliacao: String) {
     Card(
+        shape = RectangleShape,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .border(BorderStroke(0.5.dp, Color.Gray))
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -51,12 +56,12 @@ fun ProfileCard() {
             // Informações do perfil (nome, áreas, localização)
             Column {
                 Text(
-                    text = "Nome da pessoa",
+                    text = nome,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = "Áreas: Física, Matemática",
+                    text = "Áreas: $areas",
                     fontSize = 14.sp
                 )
                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -68,7 +73,7 @@ fun ProfileCard() {
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
-                        text = "SP",
+                        text = estado,
                         fontSize = 14.sp
                     )
                 }
@@ -92,7 +97,7 @@ fun ProfileCard() {
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
-                        text = "4.5",
+                        text = avaliacao,
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -104,7 +109,8 @@ fun ProfileCard() {
                 // Botão "Ver Perfil"
                 Button(
                     onClick = { /* Ação ao clicar no botão */ },
-                    colors = ButtonDefaults.buttonColors(colorResource(id = R.color.bluePrincipal)), // Define a cor de fundo do botão
+                    colors = ButtonDefaults.buttonColors(colorResource(id = R.color.bluePrincipal)),
+                    shape = RoundedCornerShape(12.dp),
                     modifier = Modifier
                         .align(Alignment.End)
                         .width(100.dp)
@@ -121,3 +127,5 @@ fun ProfileCard() {
         }
     }
 }
+
+
