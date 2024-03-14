@@ -1,5 +1,6 @@
 package br.com.fiap.sowa.ui.components
 
+import android.provider.ContactsContract.CommonDataKinds.Email
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
@@ -31,7 +32,7 @@ import br.com.fiap.sowa.R
 
 //@Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun ProfileCard(nome: String, areas: String, estado: String, avaliacao: String) {
+fun ProfileCardConnection(nome: String, areas: String, estado: String, email: String, telefone: String) {
     Card(
         shape = RectangleShape,
         modifier = Modifier
@@ -87,42 +88,34 @@ fun ProfileCard(nome: String, areas: String, estado: String, avaliacao: String) 
                 horizontalAlignment = Alignment.End,
                 modifier = Modifier.weight(1f)
             ) {
-                // Avaliação
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.baseline_star_24),
-                        contentDescription = null,
-                        tint = Color.Yellow,
-                        modifier = Modifier.size(16.dp)
-                    )
-                    Spacer(modifier = Modifier.width(4.dp))
                     Text(
-                        text = avaliacao,
-                        fontSize = 14.sp,
+                        text = telefone,
+                        fontSize = 11.sp,
                         fontWeight = FontWeight.Bold
                     )
-                }
-
-                // Espaçamento entre a avaliação e o botão
-                Spacer(modifier = Modifier.height(8.dp))
-
-                // Botão "Ver Perfil"
-                Button(
-                    onClick = { /* Ação ao clicar no botão */ },
-                    colors = ButtonDefaults.buttonColors(colorResource(id = R.color.bluePrincipal)),
-                    shape = RoundedCornerShape(12.dp),
-                    modifier = Modifier
-                        .align(Alignment.End)
-                        .width(100.dp)
-                        .height(35.dp)
-                ) {
-                    Text(
-                        text = "Ver Perfil",
-                        color = Color.White,
-                        fontSize = 9.sp,
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Icon(
+                        painter = painterResource(id = R.drawable.phone),
+                        contentDescription = null,
+                        tint = Color.Black,
+                        modifier = Modifier.size(16.dp)
                     )
                 }
-
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = email,
+                        fontSize = 11.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Icon(
+                        painter = painterResource(id = R.drawable.email),
+                        contentDescription = null,
+                        tint = Color.Black,
+                        modifier = Modifier.size(16.dp)
+                    )
+                }
             }
         }
     }
