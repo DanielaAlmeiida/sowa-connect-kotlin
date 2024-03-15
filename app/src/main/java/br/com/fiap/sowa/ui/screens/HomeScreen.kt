@@ -4,7 +4,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import br.com.fiap.sowa.ui.components.Header
 import br.com.fiap.sowa.ui.components.NavBar
 import br.com.fiap.sowa.ui.components.ProfileCard
@@ -31,5 +33,14 @@ fun HomeScreen(navController: NavController) {
             }
         }
         NavBar(navController,  "home")
+    }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun PreviewHomeScreen() {
+    val navController = rememberNavController()
+    Box(modifier = Modifier.fillMaxSize()) {
+        HomeScreen(navController = navController)
     }
 }

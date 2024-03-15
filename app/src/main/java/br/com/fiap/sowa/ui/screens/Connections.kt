@@ -2,6 +2,7 @@ package br.com.fiap.sowa.ui.screens
 
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -9,7 +10,9 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import br.com.fiap.sowa.ui.components.Header
 import br.com.fiap.sowa.ui.components.NavBar
 import br.com.fiap.sowa.ui.components.ProfileCard
@@ -37,5 +40,14 @@ fun ConnectionsScreen(navController: NavController) {
             }
         }
         NavBar(navController, "connections")
+    }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun PreviewConnectionsScreen() {
+    val navController = rememberNavController()
+    Box(modifier = Modifier.fillMaxSize()) {
+        ConnectionsScreen(navController = navController)
     }
 }
