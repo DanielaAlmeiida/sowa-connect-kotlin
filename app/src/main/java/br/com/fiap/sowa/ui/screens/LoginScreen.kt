@@ -41,7 +41,7 @@ fun LoginScreen(navController: NavController) {
         ) {
             GradientHeaderWithImage()
             Spacer(modifier = Modifier.height(16.dp))
-            EmailAndPasswordFields()
+            EmailAndPasswordFields(navController)
             Spacer(modifier = Modifier.height(16.dp))
             EnterButtons(navController)
             Spacer(modifier = Modifier.height(16.dp))
@@ -83,10 +83,19 @@ fun GradientHeaderWithImage() {
 }
 
 @Composable
-fun EmailAndPasswordFields() {
+fun EmailAndPasswordFields(navController: NavController) {
     var email by remember { mutableStateOf("") }
     var senha by remember { mutableStateOf("") }
+    var corLogin by remember { mutableStateOf(Color.Transparent) }
+    var corCadastro by remember { mutableStateOf(Color.Transparent) }
 
+    if (navController.currentBackStackEntry?.destination?.route == "login") {
+        corLogin = Color.Transparent
+        corCadastro = Color(0xFF4876AD)
+    } else if (navController.currentBackStackEntry?.destination?.route == "cadastro") {
+        corLogin = Color(0xFF4876AD)
+        corCadastro = Color.Transparent
+    }
 
     Row(
         modifier = Modifier
@@ -98,24 +107,24 @@ fun EmailAndPasswordFields() {
                     endX = 900f
                 )
             )
-            .padding(horizontal = 40.dp)
-            .height(40.dp),
+            .padding(horizontal = 45.dp)
+            .height(32.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Button(
-            onClick = { /* Lógica de autenticação */ },
-            colors = ButtonDefaults.buttonColors(Color.Transparent),
+            onClick = { navController.navigate("login") },
+            colors = ButtonDefaults.buttonColors(corLogin),
             shape = RoundedCornerShape(10.dp),
         ) {
-            Text(text = "Login", fontSize = 14.sp, color = Color.White)
+            Text(text = "Login", fontSize = 12.sp, color = Color.White)
         }
 
         Button(
             onClick = { /* Lógica de registro */ },
-            colors = ButtonDefaults.buttonColors(Color.Transparent),
+            colors = ButtonDefaults.buttonColors(corCadastro),
             shape = RoundedCornerShape(10.dp)
         ) {
-            Text(text = "Cadastro", fontSize = 14.sp, color = Color.White)
+            Text(text = "Cadastro", fontSize = 12.sp, color = Color.White)
         }
     }
 
@@ -160,26 +169,31 @@ fun EmailAndPasswordFields() {
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        Text(
-            text = "Esqueceu a senha?",
-            fontSize = 12.sp,
-            style = TextStyle(textDecoration = TextDecoration.Underline),
-            color = Color.Gray,
-            textAlign = TextAlign.End,
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
+        Button(
+            onClick = { /*TODO*/ },
+            modifier = Modifier
+                .height(32.dp)
+                .width(110.dp)
+                .align(Alignment.End),
+            colors = ButtonDefaults.buttonColors(Color.Transparent),
+            contentPadding = PaddingValues(horizontal = 0.dp)
+        ) {
+            Text(
+                text = "Esqueceu a senha?",
+                fontSize = 12.sp,
+                style = TextStyle(textDecoration = TextDecoration.Underline),
+                color = Color.Gray,
+                textAlign = TextAlign.End,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
     }
 }
 
 @Composable
 fun EnterButtons(navController: NavController) {
     Button(
-        onClick = {
-            /* Lógica de autenticação */
-            navController.navigate("home")
-        },
+        onClick = { navController.navigate("home") },
         colors = ButtonDefaults.buttonColors(Color.Transparent),
         modifier = Modifier
             .width(270.dp)
@@ -192,7 +206,11 @@ fun EnterButtons(navController: NavController) {
                 shape = RoundedCornerShape(10.dp)
             )
     ) {
-        Text(text = "ENTRAR", fontSize = 18.sp, color = Color.White)
+        Text(
+            text = "ENTRAR",
+            fontSize = 16.sp,
+            color = Color.White
+        )
     }
 }
 
@@ -203,7 +221,8 @@ fun ExternalLoginButtons() {
         horizontalArrangement = Arrangement.Center,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp, horizontal = 60.dp)
+            .padding
+                (vertical = 8.dp, horizontal = 60.dp)
     ) {
         Divider(modifier = Modifier.weight(1f), color = Color.Gray)
         Text(
@@ -214,6 +233,9 @@ fun ExternalLoginButtons() {
         )
         Divider(modifier = Modifier.weight(1f), color = Color.Gray)
     }
+
+    Spacer(modifier = Modifier.height(8.dp))
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -221,6 +243,8 @@ fun ExternalLoginButtons() {
             icon = R.drawable.google_icon,
             text = "Entrar com Google"
         )
+
+        Spacer(modifier = Modifier.height(12.dp))
 
         SocialButton(
             icon = R.drawable.facebook_icon,
