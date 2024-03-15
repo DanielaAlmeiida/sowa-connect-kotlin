@@ -1,24 +1,33 @@
 package br.com.fiap.sowa.ui.screens
 
 import androidx.compose.runtime.Composable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.ui.Alignment
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import br.com.fiap.sowa.ui.components.Header
 import br.com.fiap.sowa.ui.components.NavBar
+import br.com.fiap.sowa.ui.components.PerfilDados
+import br.com.fiap.sowa.ui.components.PerfilHeader
 
 @Composable
 fun PerfilScreen( navController: NavController ) {
+    var descricao: String = "Na escola do perfil, cada corredor é um portal para o conhecimento, onde os murais respiram inspiração e os corações pulsam aprendizado." +
+            " Os sorrisos dos alunos são pinceladas de esperança e os lápis, instrumentos de criação." +
+            " Nas salas de aula, as mentes curiosas se entrelaçam em debates e descobertas, enquanto os professores são faróis de sabedoria, guiando cada aluno em sua jornada educacional. "
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceBetween,
-        modifier = Modifier .fillMaxSize()
+        modifier = Modifier.fillMaxSize()
     ) {
         Header()
-        //Conteúdo profile
+        PerfilHeader("E.E. Prof José Barreto", "Teatro, Dança", "4/5", "222")
+        LazyColumn(
+            modifier = Modifier.weight(1f)
+        ) {
+            item {
+                PerfilDados("(11) 91234-5678", "email@gmail.com", "Av. Lins Vasconselos, 5000 - São Paulo, SP", descricao = descricao)
+            }
+        }
         NavBar(navController, "perfil")
     }
 }

@@ -12,11 +12,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -30,18 +32,21 @@ import br.com.fiap.sowa.R
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun Header() {
-    Row(modifier = Modifier
-        .fillMaxWidth()
-        .height(70.dp)
-
-        .background(colorResource(id = R.color.bluePrincipal)),
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(70.dp)
+            .shadow(4.dp)
+            .background(colorResource(id = R.color.bluePrincipal)),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ){
         Image(
             painter = painterResource(id = R.drawable.sowa_logo),
             contentDescription = "Logo Sowa",
-            modifier = Modifier.size(60.dp).padding(horizontal = 16.dp)
+            modifier = Modifier
+                .size(60.dp)
+                .padding(horizontal = 16.dp)
         )
         Text(
             text = "SOWA Connect",
@@ -52,7 +57,9 @@ fun Header() {
         Button(
             onClick = {  },
             colors = ButtonDefaults.buttonColors(Color.Red),
-            modifier = Modifier.align(Alignment.CenterVertically).padding(horizontal = 16.dp)
+            modifier = Modifier
+                .align(Alignment.CenterVertically)
+                .padding(horizontal = 16.dp)
         ) {
             Icon(
                 imageVector = Icons.Default.Notifications,
@@ -61,4 +68,10 @@ fun Header() {
             Text(text = "9+", fontSize = 20.sp, color = Color.White)
         }
     }
+    Divider(
+        modifier = Modifier.fillMaxWidth(),
+        color = Color.Gray,
+        thickness = 2.dp
+    )
 }
+

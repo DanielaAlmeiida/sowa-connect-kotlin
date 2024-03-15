@@ -31,7 +31,7 @@ fun NavBar(navController: NavController, perfilButton: String) {
     ) {
         Button(
             onClick = { navController.navigate("home") },
-            colors = ButtonDefaults.buttonColors(if (perfilButton == "home") Color.Blue else colorResource(id = R.color.bluePrincipal)),
+            colors = ButtonDefaults.buttonColors(if (perfilButton == "home") colorResource(id = R.color.darkBlue) else colorResource(id = R.color.bluePrincipal)),
             shape = RectangleShape,
             modifier = Modifier
                 .fillMaxHeight()
@@ -54,7 +54,7 @@ fun NavBar(navController: NavController, perfilButton: String) {
         }
         Button(
             onClick = { navController.navigate("connections") },
-            colors = ButtonDefaults.buttonColors(if (perfilButton == "connections") Color.Blue else colorResource(id = R.color.bluePrincipal)),
+            colors = ButtonDefaults.buttonColors(if (perfilButton == "connections") colorResource(id = R.color.darkBlue) else colorResource(id = R.color.bluePrincipal)),
             shape = RectangleShape,
             modifier = Modifier
                 .fillMaxHeight()
@@ -78,7 +78,7 @@ fun NavBar(navController: NavController, perfilButton: String) {
 
         Button(
             onClick = { navController.navigate("perfil") },
-            colors = ButtonDefaults.buttonColors(if (perfilButton == "perfil") Color.Blue else colorResource(id = R.color.bluePrincipal)),
+            colors = ButtonDefaults.buttonColors(if (perfilButton == "perfil") colorResource(id = R.color.darkBlue) else colorResource(id = R.color.bluePrincipal)),
             shape = RectangleShape,
             modifier = Modifier
                 .fillMaxHeight()
