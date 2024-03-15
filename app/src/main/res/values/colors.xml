@@ -11,4 +11,8 @@
     <color name="grayPrincipal">#FF3C3C3C</color>
     <color name="darkerBlue">#FF1A4980</color>
     <color name="lightGray">#DFDFDF</color>
+    <color name="lightGray2">#FFEEEEEE</color>
+    <color name="darkBlue">#FF1A4980</color>
+    <color name="superLightBlue">#FFEDF1F5</color>
+    <color name="notifications">#FFEC392D</color>
 </resources>

@@ -11,51 +11,95 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.Icon
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import br.com.fiap.sowa.R
 
 //@Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun NavBar(navController: NavController) {
+fun NavBar(navController: NavController, perfilButton: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(50.dp)
+            .height(70.dp)
             .background(colorResource(id = R.color.bluePrincipal)),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Button(
             onClick = { navController.navigate("home") },
-            colors = ButtonDefaults.buttonColors(Color.White),
+            colors = ButtonDefaults.buttonColors(if (perfilButton == "home") colorResource(id = R.color.darkBlue) else colorResource(id = R.color.bluePrincipal)),
+            shape = RectangleShape,
             modifier = Modifier
+                .fillMaxHeight()
                 .weight(1f)
                 //.padding(horizontal = 4.dp) // Ajuste o espaçamento entre os botões conforme necessário
         ) {
-            Text(text = "Home", fontSize = 12.sp, color = Color.Gray)
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.weight(1f)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.home),
+                    contentDescription = null,
+                    tint = Color.White,
+                    modifier = Modifier.size(30.dp)
+                )
+                Spacer(modifier = Modifier.height(3.dp))
+                Text(text = "Home", fontSize = 12.sp, color = Color.White)
+            }
         }
-
         Button(
             onClick = { navController.navigate("connections") },
-            colors = ButtonDefaults.buttonColors(Color.White),
+            colors = ButtonDefaults.buttonColors(if (perfilButton == "connections") colorResource(id = R.color.darkBlue) else colorResource(id = R.color.bluePrincipal)),
+            shape = RectangleShape,
             modifier = Modifier
+                .fillMaxHeight()
                 .weight(1f)
                 //.padding(horizontal = 4.dp) // Ajuste o espaçamento entre os botões conforme necessário
         ) {
-            Text(text = "Connections", fontSize = 12.sp, color = Color.Gray)
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.weight(1f)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.connection),
+                    contentDescription = null,
+                    tint = Color.White,
+                    modifier = Modifier.size(30.dp)
+                )
+                Spacer(modifier = Modifier.height(3.dp))
+                Text(text = "Connections", fontSize = 12.sp, color = Color.White)
+            }
         }
 
         Button(
             onClick = { navController.navigate("perfil") },
-            colors = ButtonDefaults.buttonColors(Color.White),
+            colors = ButtonDefaults.buttonColors(if (perfilButton == "perfil") colorResource(id = R.color.darkBlue) else colorResource(id = R.color.bluePrincipal)),
+            shape = RectangleShape,
             modifier = Modifier
+                .fillMaxHeight()
                 .weight(1f)
                 //.padding(horizontal = 4.dp) // Ajuste o espaçamento entre os botões conforme necessário
         ) {
-            Text(text = "Perfil", fontSize = 12.sp, color = Color.Gray)
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.weight(1f)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.perfil),
+                    contentDescription = null,
+                    tint = Color.White,
+                    modifier = Modifier.size(30.dp)
+                )
+                Spacer(modifier = Modifier.height(3.dp))
+                Text(text = "Perfil", fontSize = 12.sp, color = Color.White)
+            }
         }
     }
-
 }
+
+
