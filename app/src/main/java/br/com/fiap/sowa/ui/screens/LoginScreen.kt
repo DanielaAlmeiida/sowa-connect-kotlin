@@ -41,6 +41,8 @@ fun LoginScreen(navController: NavController) {
         ) {
             GradientHeaderWithImage()
             Spacer(modifier = Modifier.height(16.dp))
+            LoginAndCadastro(navController)
+            Spacer(modifier = Modifier.height(16.dp))
             EmailAndPasswordFields(navController)
             Spacer(modifier = Modifier.height(16.dp))
             EnterButtons(navController)
@@ -83,9 +85,7 @@ fun GradientHeaderWithImage() {
 }
 
 @Composable
-fun EmailAndPasswordFields(navController: NavController) {
-    var email by remember { mutableStateOf("") }
-    var senha by remember { mutableStateOf("") }
+fun LoginAndCadastro (navController: NavController) {
     var corLogin by remember { mutableStateOf(Color.Transparent) }
     var corCadastro by remember { mutableStateOf(Color.Transparent) }
 
@@ -127,8 +127,12 @@ fun EmailAndPasswordFields(navController: NavController) {
             Text(text = "Cadastro", fontSize = 12.sp, color = Color.White)
         }
     }
+}
 
-    Spacer(modifier = Modifier.height(16.dp))
+@Composable
+fun EmailAndPasswordFields(navController: NavController){
+    var email by remember { mutableStateOf("") }
+    var senha by remember { mutableStateOf("") }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
