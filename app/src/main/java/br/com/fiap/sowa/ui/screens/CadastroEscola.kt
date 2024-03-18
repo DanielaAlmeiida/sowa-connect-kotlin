@@ -1,18 +1,18 @@
 package br.com.fiap.sowa.ui.screens
-
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -46,7 +46,7 @@ fun CadastroEscola(navController: NavController) {
 @Composable
 fun EscolaOrProfissional(navController: NavController) {
     var nome by remember { mutableStateOf("") }
-    var senha by remember { mutableStateOf("") }
+    var tipoEscola by remember { mutableStateOf("") }
     var escolaDestaque by remember { mutableStateOf(true) }
     var profissionalDestaque by remember { mutableStateOf(false) }
 
@@ -112,28 +112,36 @@ fun EscolaOrProfissional(navController: NavController) {
                 }
             }
         }
+        Spacer(modifier = Modifier.height(7.dp))
+        OutlinedTextField(
+            value = nome,
+            onValueChange = { letra ->
+                nome = letra
+            },
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(5.dp),
+            label = { Text(text = "Nome") },
+            placeholder = { Text(text = "Digite o tipo de escola") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            trailingIcon = {
+            }
+        )
+        Spacer(modifier = Modifier.height(7.dp))
+        OutlinedTextField(
+            value = tipoEscola,
+            onValueChange = { letra ->
+                tipoEscola = letra
+            },
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(5.dp),
+            label = { Text(text = "Tipo da escola") },
+            placeholder = { Text(text = "Digite o tipo de escola") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            trailingIcon = {
+            }
+        )
     }
 }
-//        Spacer(modifier = Modifier.height(7.dp))
-//
-//        OutlinedTextField(
-//            value = senha.replace(Regex("."), "*"),
-//            onValueChange = { letra ->
-//                senha = letra
-//            },
-//            modifier = Modifier.fillMaxWidth(),
-//            shape = RoundedCornerShape(10.dp),
-//            label = { Text(text = "Tipo de escola") },
-//            placeholder = { Text(text = "Digite o tipo de escola") },
-//            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-//            trailingIcon = {
-//            }
-//        )
-//
-//        Spacer(modifier = Modifier.height(8.dp))
-//       }
-
-
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
