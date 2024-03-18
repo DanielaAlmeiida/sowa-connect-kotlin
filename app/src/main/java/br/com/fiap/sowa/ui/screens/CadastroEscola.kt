@@ -120,7 +120,15 @@ fun EscolaOrProfissional(navController: NavController) {
             },
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(5.dp),
-            label = { Text(text = "Nome") },
+            label = {
+                Row {
+                    Text(text = "Nome")
+                    Text(
+                        text = "*",
+                        color = Color.Red
+                    )
+                }
+                },
             placeholder = { Text(text = "Digite o tipo de escola") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             trailingIcon = {
@@ -134,7 +142,15 @@ fun EscolaOrProfissional(navController: NavController) {
             },
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(5.dp),
-            label = { Text(text = "Tipo da escola") },
+            label = {
+                Row {
+                    Text(text = "Tipo de escola")
+                    Text(
+                        text = "*",
+                        color = Color.Red
+                    )
+                }
+            },
             placeholder = { Text(text = "Digite o tipo de escola") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             trailingIcon = {
