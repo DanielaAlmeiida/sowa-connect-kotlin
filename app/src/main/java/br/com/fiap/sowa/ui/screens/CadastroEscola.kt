@@ -149,108 +149,111 @@ fun BuscarCep(navController: NavController) {
         Box(
             modifier = Modifier.fillMaxWidth()
         ) {
-            Row(
+            Column(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(1.dp),
-                verticalAlignment = Alignment.CenterVertically
             ) {
-                OutlinedTextField(
-                    value = cep,
-                    onValueChange = { newValue ->
-                        val formattedCep = formatarCEP(newValue.text)
-                        cep = TextFieldValue(text = formattedCep, selection = TextRange(formattedCep.length))
-                        cepValido = validarCEP(formattedCep)
-                    },
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(end = 8.dp)
-                        .onFocusChanged { focusState ->
-                            isFocused = focusState.isFocused
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(1.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    OutlinedTextField(
+                        value = cep,
+                        onValueChange = { newValue ->
+                            val formattedCep = formatarCEP(newValue.text)
+                            cep = TextFieldValue(formattedCep)
+                            cepValido = validarCEP(formattedCep)
                         },
-                    shape = RoundedCornerShape(5.dp),
-                    label = {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(text = "CEP")
-                            Text(
-                                text = "*",
-                                color = Color.Red,
-                                modifier = Modifier.padding(start = 4.dp)
-                            )
-                            Spacer(modifier = Modifier.weight(1f))
-                            if (!isFocused && cep.text.isEmpty()) {
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(end = 8.dp)
+                            .onFocusChanged { focusState ->
+                                isFocused = focusState.isFocused
+                            },
+                        shape = RoundedCornerShape(5.dp),
+                        label = {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(text = "CEP")
                                 Text(
-                                    text = "",
-                                    color = Color.Gray,
-                                    textAlign = TextAlign.End,
-                                    fontSize = 13.sp,
+                                    text = "*",
+                                    color = Color.Red,
+                                    modifier = Modifier.padding(start = 4.dp)
                                 )
+                                Spacer(modifier = Modifier.weight(1f))
+                                if (!isFocused && cep.text.isEmpty()) {
+                                    Text(
+                                        text = "",
+                                        color = Color.Gray,
+                                        //textAlign = TextAlign.End,
+                                        fontSize = 13.sp,
+                                    )
+                                }
                             }
                         }
+                    )
+                    Button(
+                        onClick = { /* Ação ao clicar no botão */ },
+                        colors = ButtonDefaults.buttonColors(colorResource(id = R.color.bluePrincipal)),
+                        shape = RoundedCornerShape(5.dp),
+                        modifier = Modifier
+                            .height(40.dp)
+                            .align(Alignment.CenterVertically)
+                    ) {
+                        Text(
+                            text = "Buscar",
+                            color = Color.White,
+                            fontSize = 12.sp,
+                        )
                     }
-                )
-                Button(
-                    onClick = { /* Ação ao clicar no botão */ },
-                    colors = ButtonDefaults.buttonColors(colorResource(id = R.color.bluePrincipal)),
-                    shape = RoundedCornerShape(5.dp),
-                    modifier = Modifier
-                        .height(40.dp)
-                        .align(Alignment.CenterVertically)
-                ) {
+                }
+
+                if (!cepValido && cep.text.isNotEmpty()) {
                     Text(
-                        text = "Buscar",
-                        color = Color.White,
-                        fontSize = 12.sp,
+                        text = "CEP inválido",
+                        color = Color.Red,
+                        textAlign = TextAlign.Left,
+                        fontSize = 13.sp,
+                        modifier = Modifier.padding(top = 4.dp)
                     )
                 }
-            }
-        }
 
-        if (!cepValido && cep.text.isNotEmpty()) {
-            Text(
-                text = "CEP inválido",
-                color = Color.Red,
-                textAlign = TextAlign.Left,
-                fontSize = 13.sp,
-                modifier = Modifier.padding(top = 4.dp)
-            )
-        }
-
-        Spacer(modifier = Modifier.height(10.dp))
-        Box(
-            modifier = Modifier.fillMaxWidth(),
-            contentAlignment = Alignment.Center
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                /*
+                Spacer(modifier = Modifier.height(10.dp))
+                Box(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        /*
                 Se der certo a consulta ao CEP, podemos deixar o campo de endereço disabled?
                 (pois preencherá automático)
                 */
-                OutlinedTextFieldModel(
-                    value = endereco,
-                    label = "Endereço",
-                    placeholder = "Digite o endereço",
-                    modifier = Modifier.width(190.dp),
-                    keyboardType = KeyboardType.Text,
-                    atualizarValor = { endereco = it}
-                )
-                OutlinedTextFieldModel(
-                    value = numero,
-                    label = "Número",
-                    placeholder = "Digite o número",
-                    modifier = Modifier.width(80.dp),
-                    keyboardType = KeyboardType.Number,
-                    atualizarValor = { numero = it}
-                )
+                        OutlinedTextFieldModel(
+                            value = endereco,
+                            label = "Endereço",
+                            placeholder = "Digite o endereço",
+                            modifier = Modifier.width(190.dp),
+                            keyboardType = KeyboardType.Text,
+                            atualizarValor = { endereco = it }
+                        )
+                        OutlinedTextFieldModel(
+                            value = numero,
+                            label = "Número",
+                            placeholder = "Digite o número",
+                            modifier = Modifier.width(80.dp),
+                            keyboardType = KeyboardType.Number,
+                            atualizarValor = { numero = it }
+                        )
+                    }
+                }
             }
         }
     }
-
 }
 
 fun validarCEP(cep: String): Boolean {
