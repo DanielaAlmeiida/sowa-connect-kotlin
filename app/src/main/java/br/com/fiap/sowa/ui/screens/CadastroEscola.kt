@@ -9,9 +9,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -154,12 +155,14 @@ fun EscolaOrProfissional(navController: NavController) {
 
 @Composable
 fun BuscarCep(navController: NavController) {
-    var cep by remember { mutableStateOf("") }
+    var isFocused by remember { mutableStateOf(false) }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.padding(horizontal = 64.dp)
     ) {
+        var text by remember { mutableStateOf(TextFieldValue()) }
+
         Box {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -167,37 +170,37 @@ fun BuscarCep(navController: NavController) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 OutlinedTextField(
-                    value = cep,
-                    onValueChange = { letra ->
-                        cep = letra
-                    },
+                    value = text,
+                    onValueChange = { text = it },
                     modifier = Modifier
                         .weight(1f)
-                        .padding(end = 8.dp),
+                        .padding(end = 8.dp)
+                        .onFocusChanged { focusState ->
+                            isFocused = focusState.isFocused
+                        },
                     shape = RoundedCornerShape(5.dp),
                     label = {
                         Row(
-                            verticalAlignment = Alignment.CenterVertically // Alinhar verticalmente os elementos
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(text = "CEP")
                             Text(
                                 text = "*",
                                 color = Color.Red,
-                                modifier = Modifier.padding(start = 4.dp) // Adicionar espaço entre "CEP" e o asterisco
+                                modifier = Modifier.padding(start = 4.dp)
                             )
-                            Spacer(modifier = Modifier.weight(1f)) // Preencher o espaço restante na linha
-                            Text(
-                                text = "11111-000",
-                                color = Color.Gray,
-                                textAlign = TextAlign.End,
-                                fontSize = 13.sp,
-                            )
-
+                            Spacer(modifier = Modifier.weight(1f))
+                            if (!isFocused && text.text.isEmpty()) {
+                                Text(
+                                    text = "11111-000",
+                                    color = Color.Gray,
+                                    textAlign = TextAlign.End,
+                                    fontSize = 13.sp,
+                                )
+                            }
                         }
-                    },
-                    placeholder = { Text(text = "Digite o CEP da escola") },
+                    }
                 )
-
                 Button(
                     onClick = { /* Ação ao clicar no botão */ },
                     colors = ButtonDefaults.buttonColors(colorResource(id = R.color.bluePrincipal)),
@@ -216,6 +219,7 @@ fun BuscarCep(navController: NavController) {
         }
     }
 }
+
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
