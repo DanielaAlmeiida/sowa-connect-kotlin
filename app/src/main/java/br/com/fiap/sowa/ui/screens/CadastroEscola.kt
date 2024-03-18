@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -156,24 +157,28 @@ fun EscolaOrProfissional(navController: NavController) {
 @Composable
 fun BuscarCep(navController: NavController) {
     var isFocused by remember { mutableStateOf(false) }
-    var text by remember { mutableStateOf(TextFieldValue()) }
+    var cep by remember { mutableStateOf(TextFieldValue()) }
     var cepValido by remember { mutableStateOf(false) }
+    var endereco by remember { mutableStateOf("") }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.padding(horizontal = 64.dp)
     ) {
-        Box {
+        Box(
+            modifier = Modifier.fillMaxWidth()
+        ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(1.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 OutlinedTextField(
-                    value = text,
-                    onValueChange = {
-                        text = it
-                        cepValido = validarCEP(it.text) // Atualiza cepValido ao alterar o valor do TextField
+                    value = cep,
+                    onValueChange = { newValue ->
+                        val formattedCep = formatarCEP(newValue.text)
+                        cep = TextFieldValue(text = formattedCep, selection = TextRange(formattedCep.length))
+                        cepValido = validarCEP(formattedCep)
                     },
                     modifier = Modifier
                         .weight(1f)
@@ -193,7 +198,7 @@ fun BuscarCep(navController: NavController) {
                                 modifier = Modifier.padding(start = 4.dp)
                             )
                             Spacer(modifier = Modifier.weight(1f))
-                            if (!isFocused && text.text.isEmpty()) {
+                            if (!isFocused && cep.text.isEmpty()) {
                                 Text(
                                     text = "11111-000",
                                     color = Color.Gray,
@@ -219,23 +224,84 @@ fun BuscarCep(navController: NavController) {
                     )
                 }
             }
-            // Adicionando o aviso de CEP inválido abaixo do OutlinedTextField
-            if (!cepValido && text.text.isNotEmpty()) {
-                Text(
-                    text = "CEP inválido",
-                    color = Color.Red,
-                    textAlign = TextAlign.Left,
-                    fontSize = 13.sp,
-                    modifier = Modifier.padding(top = 4.dp) // Adiciona um espaçamento superior
+        }
+
+        if (!cepValido && cep.text.isNotEmpty()) {
+            Text(
+                text = "CEP inválido",
+                color = Color.Red,
+                textAlign = TextAlign.Left,
+                fontSize = 13.sp,
+                modifier = Modifier.padding(top = 4.dp)
+            )
+        }
+
+        Spacer(modifier = Modifier.height(18.dp))
+        Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.Center
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                OutlinedTextField(
+                    value = endereco,
+                    onValueChange = { letra ->
+                        endereco = letra
+                    },
+                    modifier = Modifier
+                        .width(170.dp),
+                    //.height(35.dp),
+                    //modifier = Modifier.weight(1f),
+                    shape = RoundedCornerShape(5.dp),
+                    label = {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text("Endereço")
+                        }
+                    }
+                )
+                Spacer(modifier = Modifier.width(20.dp)) // Adiciona um espaçamento horizontal entre os campos de texto
+                OutlinedTextField(
+                    value = endereco,
+                    onValueChange = { letra ->
+                        endereco = letra
+                    },
+                    modifier = Modifier
+                        .width(70.dp),
+                    shape = RoundedCornerShape(5.dp),
+                    label = {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            //Text("Num")
+                        }
+                    }
                 )
             }
         }
     }
+
 }
 
 fun validarCEP(cep: String): Boolean {
     val regex = Regex("\\d{5}-\\d{3}")
     return regex.matches(cep)
+}
+
+fun formatarCEP(cepValue: String): String {
+    // Define a expressão regular para capturar os grupos de dígitos
+    val cepRegex = Regex("""^(\d{5})-?(\d{3})$""")
+
+    return if (cepValue.length > 5) {
+        // Formata o CEP conforme o padrão "11111-111"
+        cepValue.take(8).replace(cepRegex, "$1-$2")
+    } else {
+        cepValue
+    }
 }
 
 @Preview(showBackground = true, showSystemUi = true)
