@@ -15,6 +15,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,9 +34,9 @@ import br.com.fiap.sowa.R
 @Composable
 fun CardPersonSearch(nome: String, areas: String, estado: String, avaliacao: String) {
     Card(
+        colors = CardDefaults.cardColors(containerColor = Color.White),
         shape = RectangleShape,
         modifier = Modifier
-            .background(color = colorResource(id = R.color.superLightBlue)) // Aplicando a cor de fundo ao Box
             .fillMaxWidth()
             .border(BorderStroke(0.5.dp, Color.LightGray))
     ) {

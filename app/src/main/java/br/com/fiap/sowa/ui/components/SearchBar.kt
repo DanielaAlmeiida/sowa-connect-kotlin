@@ -1,20 +1,24 @@
 package br.com.fiap.sowa.ui.components
 
 import androidx.compose.runtime.Composable
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import br.com.fiap.sowa.R
+
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
@@ -29,9 +33,12 @@ fun SearchBar() {
     ) {
         OutlinedTextField(
             shape = RoundedCornerShape(50.dp),
-
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedContainerColor = Color.White,
+                unfocusedContainerColor = Color.White,
+                disabledContainerColor = Color.White,
+            ),
             modifier = Modifier
-                //.background(colorResource(id = R.color.colorSearchBar))
                 .padding(20.dp, 0.dp),
                 value = "", onValueChange = {
             },
@@ -51,12 +58,13 @@ fun SearchBar() {
 
         OutlinedButton(
             onClick = { /* Sua ação ao clicar no botão */ },
-            //colors = ButtonDefaults.buttonColors(colorResource(id = R.color.colorSearchBar)),
+            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.white)),
             shape = RoundedCornerShape(50.dp),
             modifier = Modifier
                 //.padding(0.dp, 10.dp, 10.dp, 0.dp)
                 .padding(0.dp, 0.dp, 10.dp, 0.dp)
                 .fillMaxHeight(.8f),
+
             content = {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
