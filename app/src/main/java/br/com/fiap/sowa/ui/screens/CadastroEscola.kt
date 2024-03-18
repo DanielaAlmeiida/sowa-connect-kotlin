@@ -157,7 +157,7 @@ fun EscolaOrProfissional(navController: NavController) {
 @Composable
 fun BuscarCep(navController: NavController) {
     var isFocused by remember { mutableStateOf(false) }
-    var cep by remember { mutableStateOf("") }
+    var cep by remember { mutableStateOf(TextFieldValue()) }
     var cepValido by remember { mutableStateOf(false) }
     var endereco by remember { mutableStateOf("") }
 
@@ -168,122 +168,130 @@ fun BuscarCep(navController: NavController) {
         Box(
             modifier = Modifier.fillMaxWidth()
         ) {
-            Row(
+            Column(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(1.dp),
-                verticalAlignment = Alignment.CenterVertically
             ) {
-                OutlinedTextField(
-                    value = cep,
-                    onValueChange = { newValue ->
-                        val formattedCep = formatarCEP(newValue)
-                        cep = formattedCep
-                        cepValido = validarCEP(formattedCep)
-                    },
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(end = 8.dp)
-                        .onFocusChanged { focusState ->
-                            isFocused = focusState.isFocused
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(1.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    OutlinedTextField(
+                        value = cep,
+                        onValueChange = { newValue ->
+                            val formattedCep = formatarCEP(newValue.text)
+                            cep = TextFieldValue(formattedCep)
+                            cepValido = validarCEP(formattedCep)
                         },
-                    shape = RoundedCornerShape(5.dp),
-                    label = {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(text = "CEP")
-                            Text(
-                                text = "*",
-                                color = Color.Red,
-                                modifier = Modifier.padding(start = 4.dp)
-                            )
-                            Spacer(modifier = Modifier.weight(1f))
-                            if (!isFocused && cep.isEmpty()) {
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(end = 8.dp)
+                            .onFocusChanged { focusState ->
+                                isFocused = focusState.isFocused
+                            },
+                        shape = RoundedCornerShape(5.dp),
+                        label = {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(text = "CEP")
                                 Text(
-                                    text = "11111-000",
-                                    color = Color.Gray,
-                                    textAlign = TextAlign.End,
-                                    fontSize = 13.sp,
+                                    text = "*",
+                                    color = Color.Red,
+                                    modifier = Modifier.padding(start = 4.dp)
                                 )
+                                Spacer(modifier = Modifier.weight(1f))
+                                if (!isFocused && cep.text.isEmpty()) {
+                                    Text(
+                                        text = "11111-000",
+                                        color = Color.Gray,
+                                        //textAlign = TextAlign.End,
+                                        fontSize = 13.sp,
+                                    )
+                                }
                             }
                         }
-                    }
-                )
+                    )
 
-                Button(
-                    onClick = { /* Ação ao clicar no botão */ },
-                    colors = ButtonDefaults.buttonColors(colorResource(id = R.color.bluePrincipal)),
-                    shape = RoundedCornerShape(5.dp),
-                    modifier = Modifier
-                        .height(40.dp)
-                        .align(Alignment.CenterVertically)
-                ) {
+                    Button(
+                        onClick = { /* Ação ao clicar no botão */ },
+                        colors = ButtonDefaults.buttonColors(colorResource(id = R.color.bluePrincipal)),
+                        shape = RoundedCornerShape(5.dp),
+                        modifier = Modifier
+                            .height(40.dp)
+                            .align(Alignment.CenterVertically)
+                    ) {
+                        Text(
+                            text = "Buscar",
+                            color = Color.White,
+                            fontSize = 12.sp,
+                        )
+                    }
+                }
+
+                // Adicionando um espaçamento abaixo do OutlinedTextField
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // Adicionando o aviso de CEP inválido abaixo do OutlinedTextField
+                if (!cepValido && cep.text.isNotEmpty()) {
                     Text(
-                        text = "Buscar",
-                        color = Color.White,
-                        fontSize = 12.sp,
+                        text = "CEP inválido",
+                        color = Color.Red,
+                        textAlign = TextAlign.Start, // Alinhamento à esquerda
+                        fontSize = 13.sp,
+                        //modifier = Modifier.padding(start = 8.dp) // Adiciona um espaçamento à esquerda
                     )
                 }
-            }
-            // Adicionando o aviso de CEP inválido abaixo do OutlinedTextField
-            if (!cepValido && cep.isNotEmpty()) {
-                Text(
-                    text = "CEP inválido",
-                    color = Color.Red,
-                    textAlign = TextAlign.Left,
-                    fontSize = 13.sp,
-                    modifier = Modifier.padding(top = 4.dp) // Adiciona um espaçamento superior
-                )
-            }
-        }
-
-        Spacer(modifier = Modifier.height(18.dp))
-        Box(
-            modifier = Modifier.fillMaxWidth(),
-            contentAlignment = Alignment.Center
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                OutlinedTextField(
-                    value = endereco,
-                    onValueChange = { letra ->
-                        endereco = letra
-                    },
-                    modifier = Modifier
-                        .width(170.dp),
-                    shape = RoundedCornerShape(5.dp),
-                    label = {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text("Endereço")
-                        }
+                Spacer(modifier = Modifier.height(8.dp))
+                Box(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        OutlinedTextField(
+                            value = endereco,
+                            onValueChange = { letra ->
+                                endereco = letra
+                            },
+                            modifier = Modifier
+                                .width(170.dp),
+                            shape = RoundedCornerShape(5.dp),
+                            label = {
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Text("Endereço")
+                                }
+                            }
+                        )
+                        Spacer(modifier = Modifier.width(20.dp)) // Adiciona um espaçamento horizontal entre os campos de texto
+                        OutlinedTextField(
+                            value = endereco,
+                            onValueChange = { letra ->
+                                endereco = letra
+                            },
+                            modifier = Modifier
+                                .width(70.dp),
+                            shape = RoundedCornerShape(5.dp),
+                            label = {
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    //Text("Num")
+                                }
+                            }
+                        )
                     }
-                )
-                Spacer(modifier = Modifier.width(20.dp)) // Adiciona um espaçamento horizontal entre os campos de texto
-                OutlinedTextField(
-                    value = endereco,
-                    onValueChange = { letra ->
-                        endereco = letra
-                    },
-                    modifier = Modifier
-                        .width(70.dp),
-                    shape = RoundedCornerShape(5.dp),
-                    label = {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            //Text("Num")
-                        }
-                    }
-                )
+                }
             }
         }
     }
 }
+
 
 fun validarCEP(cep: String): Boolean {
     val regex = Regex("\\d{5}-\\d{3}")
