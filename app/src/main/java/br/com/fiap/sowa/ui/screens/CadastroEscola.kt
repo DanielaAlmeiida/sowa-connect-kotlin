@@ -158,9 +158,9 @@ fun BuscarCep(navController: NavController) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     OutlinedTextField(
-                        value = cep,
+                        value = cep.text,
                         onValueChange = { newValue ->
-                            val formattedCep = formatarCEP(newValue.text)
+                            val formattedCep = formatarCEP(newValue)
                             cep = TextFieldValue(formattedCep)
                             cepValido = validarCEP(formattedCep)
                         },

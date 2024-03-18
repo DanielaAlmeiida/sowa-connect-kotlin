@@ -21,7 +21,8 @@ fun OutlinedTextFieldModel(
     placeholder: String,
     modifier: Modifier,
     keyboardType: KeyboardType,
-    atualizarValor: (String) -> Unit
+    atualizarValor: (String) -> Unit,
+    trailingIcon: (@Composable () -> Unit)? = null // tornando o parâmetro opcional
 ) {
     OutlinedTextField(
         value = value,
@@ -34,7 +35,8 @@ fun OutlinedTextFieldModel(
         maxLines = 1,
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
         onValueChange = atualizarValor,
-        shape = RoundedCornerShape(5.dp)
+        shape = RoundedCornerShape(5.dp),
+        trailingIcon = trailingIcon
     )
     Spacer(modifier = Modifier.height(7.dp))
 }
