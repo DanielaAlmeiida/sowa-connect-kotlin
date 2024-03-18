@@ -2,7 +2,6 @@ package br.com.fiap.sowa.ui.screens
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
@@ -11,8 +10,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -36,8 +35,8 @@ fun CadastroEscola(navController: NavController) {
             LoginAndCadastro(navController)
             Spacer(modifier = Modifier.height(16.dp))
             EscolaOrProfissional(navController)
-            Spacer(modifier = Modifier.height(16.dp))
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(8.dp))
+            BuscarCep(navController)
             Spacer(modifier = Modifier.weight(1f))
         }
     }
@@ -64,7 +63,7 @@ fun EscolaOrProfissional(navController: NavController) {
             textAlign = TextAlign.Left,
             modifier = Modifier.fillMaxWidth()
         )
-        Spacer(modifier = Modifier.height(7.dp))
+        Spacer(modifier = Modifier.height(8.dp))
 
         Box {
             Row(
@@ -112,7 +111,7 @@ fun EscolaOrProfissional(navController: NavController) {
                 }
             }
         }
-        Spacer(modifier = Modifier.height(7.dp))
+        Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
             value = nome,
             onValueChange = { letra ->
@@ -129,10 +128,7 @@ fun EscolaOrProfissional(navController: NavController) {
                     )
                 }
                 },
-            placeholder = { Text(text = "Digite o tipo de escola") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            trailingIcon = {
-            }
+            placeholder = { Text(text = "Digite o nome da escola") },
         )
         Spacer(modifier = Modifier.height(7.dp))
         OutlinedTextField(
@@ -147,15 +143,77 @@ fun EscolaOrProfissional(navController: NavController) {
                     Text(text = "Tipo de escola")
                     Text(
                         text = "*",
-                        color = Color.Red
+                        color = Color.Red,
                     )
                 }
             },
             placeholder = { Text(text = "Digite o tipo de escola") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            trailingIcon = {
-            }
         )
+    }
+}
+
+@Composable
+fun BuscarCep(navController: NavController) {
+    var cep by remember { mutableStateOf("") }
+
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.padding(horizontal = 64.dp)
+    ) {
+        Box {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(1.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                OutlinedTextField(
+                    value = cep,
+                    onValueChange = { letra ->
+                        cep = letra
+                    },
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(end = 8.dp),
+                    shape = RoundedCornerShape(5.dp),
+                    label = {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically // Alinhar verticalmente os elementos
+                        ) {
+                            Text(text = "CEP")
+                            Text(
+                                text = "*",
+                                color = Color.Red,
+                                modifier = Modifier.padding(start = 4.dp) // Adicionar espaço entre "CEP" e o asterisco
+                            )
+                            Spacer(modifier = Modifier.weight(1f)) // Preencher o espaço restante na linha
+                            Text(
+                                text = "11111-000",
+                                color = Color.Gray,
+                                textAlign = TextAlign.End,
+                                fontSize = 13.sp,
+                            )
+
+                        }
+                    },
+                    placeholder = { Text(text = "Digite o CEP da escola") },
+                )
+
+                Button(
+                    onClick = { /* Ação ao clicar no botão */ },
+                    colors = ButtonDefaults.buttonColors(colorResource(id = R.color.bluePrincipal)),
+                    shape = RoundedCornerShape(5.dp),
+                    modifier = Modifier
+                        .height(40.dp)
+                        .align(Alignment.CenterVertically)
+                ) {
+                    Text(
+                        text = "Buscar",
+                        color = Color.White,
+                        fontSize = 12.sp,
+                    )
+                }
+            }
+        }
     }
 }
 
