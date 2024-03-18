@@ -1,20 +1,25 @@
 package br.com.fiap.sowa.ui.screens
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import br.com.fiap.sowa.R
 
 @Composable
 fun CadastroEscola(navController: NavController) {
@@ -72,10 +77,12 @@ fun EscolaOrProfissional(navController: NavController) {
                         profissionalDestaque = false
                     },
                     shape = RoundedCornerShape(12.dp),
+                    colors = if (escolaDestaque) ButtonDefaults.buttonColors(colorResource(id = R.color.bluePrincipal)) else
+                        ButtonDefaults.buttonColors(colorResource(id = R.color.white)),
+                        border = BorderStroke(1.dp, colorResource(id = R.color.bluePrincipal)),
                     modifier = Modifier
                         .width(100.dp)
                         .height(35.dp)
-                        .background(if (escolaDestaque) Color.Blue else Color.White)
                 ) {
                     Text(
                         text = "Escola",
@@ -89,15 +96,17 @@ fun EscolaOrProfissional(navController: NavController) {
                         escolaDestaque = false
                         profissionalDestaque = true
                     },
+                    colors = if (profissionalDestaque) ButtonDefaults.buttonColors(colorResource(id = R.color.bluePrincipal)) else
+                        ButtonDefaults.buttonColors(colorResource(id = R.color.white)),
+                    border = BorderStroke(1.dp, colorResource(id = R.color.bluePrincipal)),
                     shape = RoundedCornerShape(12.dp),
                     modifier = Modifier
                         .width(120.dp)
                         .height(35.dp)
-                        .background(if (profissionalDestaque) Color.Blue else Color.White)
                 ) {
                     Text(
                         text = "Profissional",
-                        color = if (profissionalDestaque) Color.White else Color.Blue,
+                        color = if (profissionalDestaque) Color.White else colorResource(id = R.color.bluePrincipal),
                         fontSize = 12.sp,
                     )
                 }
