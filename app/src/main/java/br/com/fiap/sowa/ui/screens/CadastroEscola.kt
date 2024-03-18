@@ -157,7 +157,7 @@ fun EscolaOrProfissional(navController: NavController) {
 @Composable
 fun BuscarCep(navController: NavController) {
     var isFocused by remember { mutableStateOf(false) }
-    var cep by remember { mutableStateOf(TextFieldValue()) }
+    var cep by remember { mutableStateOf("") }
     var cepValido by remember { mutableStateOf(false) }
     var endereco by remember { mutableStateOf("") }
 
@@ -176,8 +176,8 @@ fun BuscarCep(navController: NavController) {
                 OutlinedTextField(
                     value = cep,
                     onValueChange = { newValue ->
-                        val formattedCep = formatarCEP(newValue.text)
-                        cep = TextFieldValue(text = formattedCep, selection = TextRange(formattedCep.length))
+                        val formattedCep = formatarCEP(newValue)
+                        cep = formattedCep
                         cepValido = validarCEP(formattedCep)
                     },
                     modifier = Modifier
@@ -198,7 +198,7 @@ fun BuscarCep(navController: NavController) {
                                 modifier = Modifier.padding(start = 4.dp)
                             )
                             Spacer(modifier = Modifier.weight(1f))
-                            if (!isFocused && cep.text.isEmpty()) {
+                            if (!isFocused && cep.isEmpty()) {
                                 Text(
                                     text = "11111-000",
                                     color = Color.Gray,
@@ -209,6 +209,7 @@ fun BuscarCep(navController: NavController) {
                         }
                     }
                 )
+
                 Button(
                     onClick = { /* Ação ao clicar no botão */ },
                     colors = ButtonDefaults.buttonColors(colorResource(id = R.color.bluePrincipal)),
@@ -224,16 +225,16 @@ fun BuscarCep(navController: NavController) {
                     )
                 }
             }
-        }
-
-        if (!cepValido && cep.text.isNotEmpty()) {
-            Text(
-                text = "CEP inválido",
-                color = Color.Red,
-                textAlign = TextAlign.Left,
-                fontSize = 13.sp,
-                modifier = Modifier.padding(top = 4.dp)
-            )
+            // Adicionando o aviso de CEP inválido abaixo do OutlinedTextField
+            if (!cepValido && cep.isNotEmpty()) {
+                Text(
+                    text = "CEP inválido",
+                    color = Color.Red,
+                    textAlign = TextAlign.Left,
+                    fontSize = 13.sp,
+                    modifier = Modifier.padding(top = 4.dp) // Adiciona um espaçamento superior
+                )
+            }
         }
 
         Spacer(modifier = Modifier.height(18.dp))
@@ -253,8 +254,6 @@ fun BuscarCep(navController: NavController) {
                     },
                     modifier = Modifier
                         .width(170.dp),
-                    //.height(35.dp),
-                    //modifier = Modifier.weight(1f),
                     shape = RoundedCornerShape(5.dp),
                     label = {
                         Row(
@@ -284,7 +283,6 @@ fun BuscarCep(navController: NavController) {
             }
         }
     }
-
 }
 
 fun validarCEP(cep: String): Boolean {
