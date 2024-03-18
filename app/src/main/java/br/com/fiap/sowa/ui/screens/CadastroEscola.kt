@@ -2,6 +2,7 @@ package br.com.fiap.sowa.ui.screens
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
@@ -13,6 +14,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import br.com.fiap.sowa.R
+import br.com.fiap.sowa.ui.components.OutlinedTextFieldModel
 
 @Composable
 fun CadastroEscola(navController: NavController) {
@@ -57,7 +60,6 @@ fun EscolaOrProfissional(navController: NavController) {
     )
 
     {
-
         Text(
             text = "Você é um(a)",
             fontSize = 15.sp,
@@ -113,43 +115,21 @@ fun EscolaOrProfissional(navController: NavController) {
                 }
             }
         }
-        Spacer(modifier = Modifier.height(16.dp))
-        OutlinedTextField(
+        OutlinedTextFieldModel(
             value = nome,
-            onValueChange = { letra ->
-                nome = letra
-            },
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(5.dp),
-            label = {
-                Row {
-                    Text(text = "Nome")
-                    Text(
-                        text = "*",
-                        color = Color.Red
-                    )
-                }
-                },
-            placeholder = { Text(text = "Digite o nome da escola") },
+            label = "Nome",
+            placeholder = "Digite o nome da escola",
+            modifier = Modifier,
+            keyboardType = KeyboardType.Text,
+            atualizarValor = { nome = it}
         )
-        Spacer(modifier = Modifier.height(7.dp))
-        OutlinedTextField(
+        OutlinedTextFieldModel(
             value = tipoEscola,
-            onValueChange = { letra ->
-                tipoEscola = letra
-            },
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(5.dp),
-            label = {
-                Row {
-                    Text(text = "Tipo de escola")
-                    Text(
-                        text = "*",
-                        color = Color.Red,
-                    )
-                }
-            },
-            placeholder = { Text(text = "Digite o tipo de escola") },
+            label = "Tipo de escola",
+            placeholder = "Digite o tipo de escola",
+            modifier = Modifier,
+            keyboardType = KeyboardType.Text,
+            atualizarValor = { tipoEscola = it}
         )
     }
 }
@@ -160,6 +140,7 @@ fun BuscarCep(navController: NavController) {
     var cep by remember { mutableStateOf(TextFieldValue()) }
     var cepValido by remember { mutableStateOf(false) }
     var endereco by remember { mutableStateOf("") }
+    var numero by remember { mutableStateOf("") }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -200,7 +181,7 @@ fun BuscarCep(navController: NavController) {
                             Spacer(modifier = Modifier.weight(1f))
                             if (!isFocused && cep.text.isEmpty()) {
                                 Text(
-                                    text = "11111-000",
+                                    text = "",
                                     color = Color.Gray,
                                     textAlign = TextAlign.End,
                                     fontSize = 13.sp,
@@ -236,7 +217,7 @@ fun BuscarCep(navController: NavController) {
             )
         }
 
-        Spacer(modifier = Modifier.height(18.dp))
+        Spacer(modifier = Modifier.height(10.dp))
         Box(
             modifier = Modifier.fillMaxWidth(),
             contentAlignment = Alignment.Center
@@ -246,40 +227,25 @@ fun BuscarCep(navController: NavController) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                OutlinedTextField(
+                /*
+                Se der certo a consulta ao CEP, podemos deixar o campo de endereço disabled?
+                (pois preencherá automático)
+                */
+                OutlinedTextFieldModel(
                     value = endereco,
-                    onValueChange = { letra ->
-                        endereco = letra
-                    },
-                    modifier = Modifier
-                        .width(170.dp),
-                    //.height(35.dp),
-                    //modifier = Modifier.weight(1f),
-                    shape = RoundedCornerShape(5.dp),
-                    label = {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text("Endereço")
-                        }
-                    }
+                    label = "Endereço",
+                    placeholder = "Digite o endereço",
+                    modifier = Modifier.width(190.dp),
+                    keyboardType = KeyboardType.Text,
+                    atualizarValor = { endereco = it}
                 )
-                Spacer(modifier = Modifier.width(20.dp)) // Adiciona um espaçamento horizontal entre os campos de texto
-                OutlinedTextField(
-                    value = endereco,
-                    onValueChange = { letra ->
-                        endereco = letra
-                    },
-                    modifier = Modifier
-                        .width(70.dp),
-                    shape = RoundedCornerShape(5.dp),
-                    label = {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            //Text("Num")
-                        }
-                    }
+                OutlinedTextFieldModel(
+                    value = numero,
+                    label = "Número",
+                    placeholder = "Digite o número",
+                    modifier = Modifier.width(80.dp),
+                    keyboardType = KeyboardType.Number,
+                    atualizarValor = { numero = it}
                 )
             }
         }
