@@ -1,14 +1,17 @@
 package br.com.fiap.sowa.ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import br.com.fiap.sowa.R
 import br.com.fiap.sowa.ui.components.Header
 import br.com.fiap.sowa.ui.components.NavBar
 import br.com.fiap.sowa.ui.components.CardPersonConnection
@@ -17,7 +20,10 @@ import br.com.fiap.sowa.ui.components.SearchBar
 @Composable
 fun ConnectionsScreen(navController: NavController) {
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = colorResource(id = R.color.superLightBlue))
+
     ) {
         Header()
         SearchBar()

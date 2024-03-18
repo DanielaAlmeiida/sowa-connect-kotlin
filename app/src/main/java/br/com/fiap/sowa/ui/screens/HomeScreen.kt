@@ -1,12 +1,15 @@
 package br.com.fiap.sowa.ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import br.com.fiap.sowa.R
 import br.com.fiap.sowa.ui.components.Header
 import br.com.fiap.sowa.ui.components.NavBar
 import br.com.fiap.sowa.ui.components.CardPersonSearch
@@ -15,7 +18,10 @@ import br.com.fiap.sowa.ui.components.SearchBar
 @Composable
 fun HomeScreen(navController: NavController) {
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = colorResource(id = R.color.superLightBlue))
+
     ) {
         Header()
         SearchBar()

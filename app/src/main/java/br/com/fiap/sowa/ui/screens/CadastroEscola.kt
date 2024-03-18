@@ -86,7 +86,7 @@ fun EscolaOrProfissional(navController: NavController) {
                 ) {
                     Text(
                         text = "Escola",
-                        color = if (escolaDestaque) Color.White else Color.Blue,
+                        color = if (escolaDestaque) Color.White else colorResource(id = R.color.bluePrincipal),
                         fontSize = 12.sp,
                     )
                 }
