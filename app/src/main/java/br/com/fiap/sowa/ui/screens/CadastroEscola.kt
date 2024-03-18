@@ -1,34 +1,20 @@
 package br.com.fiap.sowa.ui.screens
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Divider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import br.com.fiap.sowa.R
 
 @Composable
 fun CadastroEscola(navController: NavController) {
@@ -53,9 +39,11 @@ fun CadastroEscola(navController: NavController) {
 }
 
 @Composable
-fun EscolaOrProfissional(navController: NavController){
-    var email by remember { mutableStateOf("") }
+fun EscolaOrProfissional(navController: NavController) {
+    var nome by remember { mutableStateOf("") }
     var senha by remember { mutableStateOf("") }
+    var escolaDestaque by remember { mutableStateOf(true) }
+    var profissionalDestaque by remember { mutableStateOf(false) }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -71,61 +59,71 @@ fun EscolaOrProfissional(navController: NavController){
             textAlign = TextAlign.Left,
             modifier = Modifier.fillMaxWidth()
         )
-
-        Button(
-            onClick = { /* Ação ao clicar no botão */ },
-            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.bluePrincipal)),
-            shape = RoundedCornerShape(12.dp),
-            modifier = Modifier
-                .align(Alignment.End)
-                .width(100.dp)
-                .height(35.dp)
-        ) {
-            Text(
-                text = "Escola",
-                color = Color.White,
-                fontSize = 12.sp,
-            )
-        }
-
-        OutlinedTextField(
-            value = email,
-            onValueChange = { letra ->
-                email = letra
-            },
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(10.dp),
-            label = { Text(text = "Email") },
-            placeholder = { Text(text = "Digite seu email") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
-        )
-
         Spacer(modifier = Modifier.height(7.dp))
 
-        OutlinedTextField(
-            value = senha.replace(Regex("."), "*"),
-            onValueChange = { letra ->
-                senha = letra
-            },
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(10.dp),
-            label = { Text(text = "Senha") },
-            placeholder = { Text(text = "Digite sua senha") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            trailingIcon = {
-                Icon(
-                    painter = painterResource(id = R.drawable.eye),
-                    contentDescription = "Ícone de olho.",
-                    modifier = Modifier.size(20.dp)
-                )
+        Box {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                Button(
+                    onClick = {
+                        escolaDestaque = true
+                        profissionalDestaque = false
+                    },
+                    shape = RoundedCornerShape(12.dp),
+                    modifier = Modifier
+                        .width(100.dp)
+                        .height(35.dp)
+                        .background(if (escolaDestaque) Color.Blue else Color.White)
+                ) {
+                    Text(
+                        text = "Escola",
+                        color = if (escolaDestaque) Color.White else Color.Blue,
+                        fontSize = 12.sp,
+                    )
+                }
+
+                Button(
+                    onClick = {
+                        escolaDestaque = false
+                        profissionalDestaque = true
+                    },
+                    shape = RoundedCornerShape(12.dp),
+                    modifier = Modifier
+                        .width(120.dp)
+                        .height(35.dp)
+                        .background(if (profissionalDestaque) Color.Blue else Color.White)
+                ) {
+                    Text(
+                        text = "Profissional",
+                        color = if (profissionalDestaque) Color.White else Color.Blue,
+                        fontSize = 12.sp,
+                    )
+                }
             }
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-
         }
     }
+}
+//        Spacer(modifier = Modifier.height(7.dp))
+//
+//        OutlinedTextField(
+//            value = senha.replace(Regex("."), "*"),
+//            onValueChange = { letra ->
+//                senha = letra
+//            },
+//            modifier = Modifier.fillMaxWidth(),
+//            shape = RoundedCornerShape(10.dp),
+//            label = { Text(text = "Tipo de escola") },
+//            placeholder = { Text(text = "Digite o tipo de escola") },
+//            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+//            trailingIcon = {
+//            }
+//        )
+//
+//        Spacer(modifier = Modifier.height(8.dp))
+//       }
+
 
 
 @Preview(showBackground = true, showSystemUi = true)

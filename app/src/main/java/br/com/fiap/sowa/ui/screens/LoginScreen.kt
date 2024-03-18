@@ -120,7 +120,7 @@ fun LoginAndCadastro (navController: NavController) {
         }
 
         Button(
-            onClick = { /* Lógica de registro */ },
+            onClick = { navController.navigate("cadastroEscola") },
             colors = ButtonDefaults.buttonColors(corCadastro),
             shape = RoundedCornerShape(10.dp)
         ) {
