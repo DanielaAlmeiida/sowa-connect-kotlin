@@ -216,6 +216,14 @@ fun BuscarCep(navController: NavController) {
                     )
                 }
             }
+            //if (!isFocused && text.text.isEmpty()) {
+                Text(
+                    text = "CEP inválido",//if (cepValido) "11111-000" else "CEP inválido",
+                    color =  Color.Red,
+                    textAlign = TextAlign.Left,
+                    fontSize = 13.sp,
+                )
+            //}
         }
     }
 }
