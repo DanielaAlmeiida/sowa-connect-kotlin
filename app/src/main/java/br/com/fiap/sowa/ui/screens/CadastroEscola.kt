@@ -156,13 +156,13 @@ fun EscolaOrProfissional(navController: NavController) {
 @Composable
 fun BuscarCep(navController: NavController) {
     var isFocused by remember { mutableStateOf(false) }
+    var text by remember { mutableStateOf(TextFieldValue()) }
+    var cepValido by remember { mutableStateOf(false) }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.padding(horizontal = 64.dp)
     ) {
-        var text by remember { mutableStateOf(TextFieldValue()) }
-
         Box {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -171,7 +171,10 @@ fun BuscarCep(navController: NavController) {
             ) {
                 OutlinedTextField(
                     value = text,
-                    onValueChange = { text = it },
+                    onValueChange = {
+                        text = it
+                        cepValido = validarCEP(it.text) // Atualiza cepValido ao alterar o valor do TextField
+                    },
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 8.dp)
@@ -216,18 +219,24 @@ fun BuscarCep(navController: NavController) {
                     )
                 }
             }
-            //if (!isFocused && text.text.isEmpty()) {
+            // Adicionando o aviso de CEP inválido abaixo do OutlinedTextField
+            if (!cepValido && text.text.isNotEmpty()) {
                 Text(
-                    text = "CEP inválido",//if (cepValido) "11111-000" else "CEP inválido",
-                    color =  Color.Red,
+                    text = "CEP inválido",
+                    color = Color.Red,
                     textAlign = TextAlign.Left,
                     fontSize = 13.sp,
+                    modifier = Modifier.padding(top = 4.dp) // Adiciona um espaçamento superior
                 )
-            //}
+            }
         }
     }
 }
 
+fun validarCEP(cep: String): Boolean {
+    val regex = Regex("\\d{5}-\\d{3}")
+    return regex.matches(cep)
+}
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
