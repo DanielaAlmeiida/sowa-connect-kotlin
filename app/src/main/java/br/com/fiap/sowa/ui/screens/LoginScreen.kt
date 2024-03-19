@@ -26,7 +26,6 @@ fun LoginScreen(navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             GradientHeaderWithImage()
-            Spacer(modifier = Modifier.height(16.dp))
             LoginAndCadastro(navController)
             Spacer(modifier = Modifier.height(16.dp))
             EmailAndPasswordFields(navController)

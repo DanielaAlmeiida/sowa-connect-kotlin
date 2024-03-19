@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import br.com.fiap.sowa.ui.screens.CadastroEscola
+import br.com.fiap.sowa.ui.screens.CadastroScreen
 import br.com.fiap.sowa.ui.screens.ConnectionsScreen
 import br.com.fiap.sowa.ui.screens.HomeScreen
 import br.com.fiap.sowa.ui.screens.LoginScreen
@@ -29,8 +29,8 @@ fun SetupNavigation() {
         composable(route = "perfil") {
             PerfilScreen(navController)
         }
-        composable(route = "cadastroEscola") {
-            CadastroEscola(navController)
+        composable(route = "cadastro") {
+            CadastroScreen(navController)
         }
     }
 }
