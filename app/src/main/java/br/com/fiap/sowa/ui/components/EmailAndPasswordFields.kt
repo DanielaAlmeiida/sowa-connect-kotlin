@@ -2,14 +2,19 @@ package br.com.fiap.sowa.ui.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,6 +27,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
@@ -30,9 +37,10 @@ import androidx.navigation.NavController
 import br.com.fiap.sowa.R
 
 @Composable
-fun EmailAndPasswordFields(navController: NavController){
+fun EmailAndPasswordFields(navController: NavController) {
     var email by remember { mutableStateOf("") }
     var senha by remember { mutableStateOf("") }
+    var isPasswordVisible by remember { mutableStateOf(false) }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -47,21 +55,33 @@ fun EmailAndPasswordFields(navController: NavController){
             atualizarValor = { email = it}
         )
 
-        OutlinedTextFieldModel(
-            value = senha.replace(Regex("."), "*"),
-            label = "Senha",
-            placeholder = "Digite sua senha",
-            modifier = Modifier,
-            keyboardType = KeyboardType.Password,
-            atualizarValor = { senha = it},
+        OutlinedTextField(
+            value = senha,
+            onValueChange = { novaSenha ->
+                senha = novaSenha
+            },
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(10.dp),
+            label = { Text(text = "Senha") },
+            placeholder = { Text(text = "Digite sua senha") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             trailingIcon = {
-                Icon(
-                    painter = painterResource(id = R.drawable.eye),
-                    contentDescription = "Ícone de olho.",
-                    modifier = Modifier.size(20.dp)
-                )
+                IconButton(
+                    onClick = { isPasswordVisible = !isPasswordVisible }
+                ) {
+                    Icon(
+                        painter = painterResource(
+                            id = if (isPasswordVisible) R.drawable.eye_off else R.drawable.eye
+                        ),
+                        contentDescription = "Ícone de olho.",
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
             }
         )
+
+        Spacer(modifier = Modifier.height(8.dp))
 
         Button(
             onClick = { /*TODO*/ },
@@ -82,4 +102,9 @@ fun EmailAndPasswordFields(navController: NavController){
             )
         }
     }
+}
+
+@Composable
+fun getSenhaText(senha: String, isPasswordVisible: Boolean): String {
+    return if (isPasswordVisible) senha else senha.replace(Regex("."), "*")
 }

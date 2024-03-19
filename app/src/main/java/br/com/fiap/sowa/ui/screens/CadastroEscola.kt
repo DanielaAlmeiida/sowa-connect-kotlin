@@ -231,9 +231,9 @@ fun BuscarCep(navController: NavController) {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         /*
-                Se der certo a consulta ao CEP, podemos deixar o campo de endereço disabled?
-                (pois preencherá automático)
-                */
+                        Se der certo a consulta ao CEP, podemos deixar o campo de endereço disabled?
+                        (pois preencherá automático)
+                        */
                         OutlinedTextFieldModel(
                             value = endereco,
                             label = "Endereço",
