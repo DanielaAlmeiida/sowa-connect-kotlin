@@ -86,52 +86,24 @@ fun PerfilHeader(nome: String, areas: String, avaliacao: String, numbConnections
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ){
-            Row {
-                Icon(
-                    painter = painterResource(id = R.drawable.baseline_star_24),
-                    contentDescription = "Ícone de avaliação",
-                    tint = Color.Yellow,
-                    modifier = Modifier.size(23.dp)
-                )
-                Spacer(modifier = Modifier.width(6.dp))
-                Text(
-                    text = avaliacao,
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
-            }
-            Row {
-                Icon(
-                    painter = painterResource(id = R.drawable.connect),
-                    contentDescription = "Ícone de connects",
-                    tint = Color.White,
-                    modifier = Modifier.size(23.dp)
-                )
-                Spacer(modifier = Modifier.width(6.dp))
-                Text(
-                    text = numbConnections,
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
-            }
-            Row {
-                Icon(
-                    painter = painterResource(id = R.drawable.baseline_settings_24),
-                    contentDescription = "Ícone de configurações",
-                    tint = Color.White,
-                    modifier = Modifier.size(23.dp)
-                )
-                Spacer(modifier = Modifier.width(6.dp))
-                Text(
-                    text = "Editar perfil",
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
-            }
+            PerfilHeaderDados(
+                descricao = "Ícone de avaliação",
+                iconId = R.drawable.baseline_star_24,
+                color = Color.Yellow,
+                texto = avaliacao
+            )
+            PerfilHeaderDados(
+                descricao = "Ícone de connects",
+                iconId = R.drawable.connect,
+                color = Color.White,
+                texto = numbConnections
+            )
+            PerfilHeaderDados(
+                descricao = "Ícone de configurações",
+                iconId = R.drawable.baseline_settings_24,
+                color = Color.White,
+                texto = "Editar perfil"
+            )
         }
     }
-
 }

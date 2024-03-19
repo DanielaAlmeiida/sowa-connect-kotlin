@@ -8,7 +8,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -61,7 +60,6 @@ fun SearchBar() {
             colors = ButtonDefaults.buttonColors(colorResource(id = R.color.white)),
             shape = RoundedCornerShape(50.dp),
             modifier = Modifier
-                //.padding(0.dp, 10.dp, 10.dp, 0.dp)
                 .padding(0.dp, 0.dp, 10.dp, 0.dp)
                 .fillMaxHeight(.8f),
 

@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.fiap.sowa.R
 
-//@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun CardPersonConnection(nome: String, areas: String, estado: String, email: String, telefone: String) {
     Card(

@@ -13,7 +13,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -76,10 +75,5 @@ fun Header() {
             Text(text = "9+", fontSize = 12.sp, color = Color.White)
         }
     }
-//    Divider(
-//        modifier = Modifier.fillMaxWidth(),
-//        color = Color.Gray,
-//        thickness = 2.dp
-//    )
 }
 

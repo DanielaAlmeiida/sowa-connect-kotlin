@@ -15,11 +15,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-//import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import br.com.fiap.sowa.R
 
-//@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun NavBar(navController: NavController, perfilButton: String) {
     Row(
@@ -37,7 +35,6 @@ fun NavBar(navController: NavController, perfilButton: String) {
             modifier = Modifier
                 .fillMaxHeight()
                 .weight(1f)
-                //.padding(horizontal = 4.dp) // Ajuste o espaçamento entre os botões conforme necessário
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -60,7 +57,6 @@ fun NavBar(navController: NavController, perfilButton: String) {
             modifier = Modifier
                 .fillMaxHeight()
                 .weight(1f)
-                //.padding(horizontal = 4.dp) // Ajuste o espaçamento entre os botões conforme necessário
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -84,7 +80,6 @@ fun NavBar(navController: NavController, perfilButton: String) {
             modifier = Modifier
                 .fillMaxHeight()
                 .weight(1f)
-                //.padding(horizontal = 4.dp) // Ajuste o espaçamento entre os botões conforme necessário
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
