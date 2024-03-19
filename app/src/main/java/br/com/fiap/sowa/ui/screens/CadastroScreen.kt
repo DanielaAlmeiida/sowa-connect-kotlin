@@ -13,8 +13,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,7 +39,11 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import br.com.fiap.sowa.R
 import br.com.fiap.sowa.model.Endereco
+import br.com.fiap.sowa.service.RetrofitFactory
 import br.com.fiap.sowa.ui.components.OutlinedTextFieldModel
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 @Composable
 fun CadastroScreen(navController: NavController) {
@@ -150,6 +158,92 @@ fun EscolaOrProfissional(navController: NavController) {
 fun EnderecoCadastro(navController: NavController) {
     var cep by remember { mutableStateOf("") }
     var endereco by remember { mutableStateOf(Endereco("", "", "", "", "")) }
+    Column(
+        modifier = Modifier.padding(16.dp)
+    ) {
+        OutlinedTextField(
+            value = cep,
+            onValueChange = { cep = it },
+            label = { Text("CEP") },
+            keyboardOptions = KeyboardOptions.Default.copy(
+                imeAction = ImeAction.Done
+            ),
+            keyboardActions = KeyboardActions(onDone = {
+                searchCep(cep) { enderecoResult ->
+                    endereco = enderecoResult ?: Endereco("","","","","") // Se o resultado for nulo, cria um endereço vazio
+                }
+            }),
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(
+            onClick = { searchCep(cep) { enderecoResult ->
+                endereco = enderecoResult ?: Endereco("", "", "", "", "")
+            }
+            },
+            enabled = cep.isNotBlank(),
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Buscar Endereço")
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Campos do formulário de endereço
+        OutlinedTextField(
+            value = endereco.logradouro?: "",
+            onValueChange = { endereco.logradouro = it },
+            label = { Text("Logradouro") },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        OutlinedTextField(
+            value = endereco.bairro ?: "",
+            onValueChange = { endereco.bairro = it },
+            label = { Text("Bairro") },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        OutlinedTextField(
+            value = endereco.localidade ?: "",
+            onValueChange = { endereco.localidade = it },
+            label = { Text("Cidade") },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        OutlinedTextField(
+            value = endereco.uf ?: "",
+            onValueChange = { endereco.uf = it },
+            label = { Text("UF") },
+            modifier = Modifier.fillMaxWidth()
+        )
+    }
+}
+
+private fun searchCep(cep: String, onResult: (Endereco?) -> Unit) {
+    val call = RetrofitFactory().getCepService().getEnderecoByCep(cep = cep)
+    call.enqueue(object: Callback<Endereco> {
+        override fun onResponse(call: Call<Endereco>, response: Response<Endereco>) {
+            if (response.isSuccessful) {
+                val endereco = response.body()
+                onResult(endereco)
+            } else {
+                onResult(null)
+            }
+        }
+
+        override fun onFailure(call: Call<Endereco>, t: Throwable) {
+            onResult(null)
+        }
+    })
 }
 
 @Preview(showBackground = true, showSystemUi = true)
