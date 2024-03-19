@@ -2,25 +2,32 @@ package br.com.fiap.sowa.ui.screens
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import br.com.fiap.sowa.ui.components.EnderecoCadastro
-import br.com.fiap.sowa.ui.components.EscolaOrProfissional
 import br.com.fiap.sowa.ui.components.GradientHeaderWithImage
 import br.com.fiap.sowa.ui.components.LoginAndCadastro
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
+import br.com.fiap.sowa.ui.components.FooterLogin
+import br.com.fiap.sowa.ui.components.FormCadastro
 
 @Composable
 fun CadastroScreen(navController: NavController) {
-
-    Column(
-    ) {
+    Column (
+        modifier = Modifier.fillMaxSize()
+    ){
         GradientHeaderWithImage()
         LoginAndCadastro(navController)
-        EscolaOrProfissional(navController)
-        EnderecoCadastro(navController)
+        LazyColumn(
+        ) {
+            item {
+                FormCadastro(navController)
+                FooterLogin()
+
+            }
+        }
     }
 }
 
