@@ -3,6 +3,7 @@ package br.com.fiap.sowa.ui.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
@@ -10,13 +11,26 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import br.com.fiap.sowa.R
+import br.com.fiap.sowa.model.Usuario
 import br.com.fiap.sowa.ui.components.Header
 import br.com.fiap.sowa.ui.components.NavBar
 import br.com.fiap.sowa.ui.components.CardPersonSearch
 import br.com.fiap.sowa.ui.components.SearchBar
+import br.com.fiap.sowa.ui.components.searchUsers
 
 @Composable
 fun HomeScreen(navController: NavController) {
+
+    var usuarios by remember { mutableStateOf(emptyList<Usuario>()) }
+
+    LaunchedEffect(Unit) {
+        searchUsers { usuarioResult ->
+            usuarioResult?.let {
+                usuarios = it
+            }
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -28,17 +42,11 @@ fun HomeScreen(navController: NavController) {
         LazyColumn(
             modifier = Modifier.weight(1f)
         ) {
-            item {
-                CardPersonSearch("Carlos Eduardo", "Física, Matemática", "SP", avaliacao = "4.5")
-                CardPersonSearch("David Bush", "História, Geografia", "BA", avaliacao = "4.2")
-                CardPersonSearch("Daniela Alameda", "Artes, Teatro", "RJ", avaliacao = "4.8")
-                CardPersonSearch("Thamirys Iris", "Artes Marciais, Dança", "CE", avaliacao = "4.6")
-                CardPersonSearch("João Vittor", "Espanhol, Inglês", "TO", avaliacao = "4.7")
-                CardPersonSearch("João Vittor", "Espanhol, Inglês", "TO", avaliacao = "4.7")
-                CardPersonSearch("João Vittor", "Espanhol, Inglês", "TO", avaliacao = "4.7")
+            items(usuarios) { usuario ->
+                CardPersonSearch(navController, nome = usuario.nome ?: "", areas = usuario.areas ?: "", estado = usuario.endereco?.uf ?: "", avaliacao = "4.5")
             }
         }
-        NavBar(navController,  "home")
+        NavBar(navController, "home")
     }
 }
 

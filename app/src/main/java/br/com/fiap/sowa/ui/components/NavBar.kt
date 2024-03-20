@@ -51,7 +51,7 @@ fun NavBar(navController: NavController, perfilButton: String) {
             }
         }
         Button(
-            onClick = { navController.navigate("connections") },
+            onClick = { },
             colors = ButtonDefaults.buttonColors(if (perfilButton == "connections") colorResource(id = R.color.darkBlue) else colorResource(id = R.color.bluePrincipal)),
             shape = RectangleShape,
             modifier = Modifier

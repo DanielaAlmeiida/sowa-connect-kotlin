@@ -26,7 +26,13 @@ import androidx.compose.ui.unit.sp
 import br.com.fiap.sowa.R
 
 @Composable
-fun CardPersonConnection(nome: String, areas: String, estado: String, email: String, telefone: String) {
+fun CardPersonConnection(
+    nome: String,
+    areas: String,
+    estado: String,
+    email: String,
+    telefone: String
+) {
     Card(
         colors = CardDefaults.cardColors(containerColor = Color.White),
         shape = RectangleShape,
@@ -110,5 +116,3 @@ fun CardPersonConnection(nome: String, areas: String, estado: String, email: Str
         }
     }
 }
-
-

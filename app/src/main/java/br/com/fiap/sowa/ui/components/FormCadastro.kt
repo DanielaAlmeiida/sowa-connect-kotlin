@@ -124,7 +124,7 @@ fun FormCadastro(navController: NavController) {
         OutlinedTextFieldModel(
             value = nome,
             label = "Nome",
-            placeholder = "Digite o nome da escola",
+            placeholder = if (profissionalDestaque) "Digite o nome do profissional" else "Digite o nome da escola",
             modifier = Modifier,
             keyboardType = KeyboardType.Text,
             atualizarValor = { nome = it },
@@ -263,7 +263,7 @@ fun FormCadastro(navController: NavController) {
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = { /*TODO*/ },
+            onClick = { navController.navigate("home")},
             colors = ButtonDefaults.buttonColors(Color.Transparent),
             modifier = Modifier
                 .width(270.dp)

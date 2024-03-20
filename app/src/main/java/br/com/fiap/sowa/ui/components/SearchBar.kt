@@ -39,13 +39,14 @@ fun SearchBar() {
             ),
             modifier = Modifier
                 .padding(20.dp, 0.dp),
-                value = "", onValueChange = {
+            value = "",
+            onValueChange = {
             },
-            label={
-                Text(text = "Label aqui")
+            label = {
+                Text(text = "Pesquisar")
             },
-            placeholder ={
-                Text(text = "Placeholder aqui")
+            placeholder = {
+                Text(text = "Pesquisar...")
             },
             leadingIcon = {
                 Icon(
@@ -56,7 +57,7 @@ fun SearchBar() {
         )
 
         OutlinedButton(
-            onClick = { /* Sua ação ao clicar no botão */ },
+            onClick = { },
             colors = ButtonDefaults.buttonColors(colorResource(id = R.color.white)),
             shape = RoundedCornerShape(50.dp),
             modifier = Modifier
@@ -73,6 +74,5 @@ fun SearchBar() {
                 }
             }
         )
-
     }
 }

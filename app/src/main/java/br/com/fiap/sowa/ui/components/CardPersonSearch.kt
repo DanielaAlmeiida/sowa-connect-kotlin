@@ -29,10 +29,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import br.com.fiap.sowa.R
 
 @Composable
-fun CardPersonSearch(nome: String, areas: String, estado: String, avaliacao: String) {
+fun CardPersonSearch(
+    navController: NavController,
+    nome: String,
+    areas: String,
+    estado: String,
+    avaliacao: String
+) {
     Card(
         colors = CardDefaults.cardColors(containerColor = Color.White),
         shape = RectangleShape,
@@ -103,7 +110,7 @@ fun CardPersonSearch(nome: String, areas: String, estado: String, avaliacao: Str
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Button(
-                    onClick = { /* Ação ao clicar no botão */ },
+                    onClick = { navController.navigate("perfil") },
                     colors = ButtonDefaults.buttonColors(colorResource(id = R.color.bluePrincipal)),
                     shape = RoundedCornerShape(12.dp),
                     modifier = Modifier
@@ -122,5 +129,3 @@ fun CardPersonSearch(nome: String, areas: String, estado: String, avaliacao: Str
         }
     }
 }
-
-
