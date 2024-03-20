@@ -1,6 +1,7 @@
 package br.com.fiap.sowa.ui.components
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,6 +19,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,9 +27,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -47,12 +51,14 @@ fun FormCadastro(navController: NavController) {
     var escolaDestaque by remember { mutableStateOf(true) }
     var profissionalDestaque by remember { mutableStateOf(false) }
     var endereco by remember { mutableStateOf(Endereco("", "", "", "", "")) }
-    var nome by remember{ mutableStateOf("")}
-    var cep by remember { mutableStateOf("")}
-    var areas by remember { mutableStateOf("")}
-    var email by remember { mutableStateOf("")}
-    var senha by remember { mutableStateOf("")}
-    var csenha by remember { mutableStateOf("")}
+    var nome by remember { mutableStateOf("") }
+    var cep by remember { mutableStateOf("") }
+    var areas by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var senha by remember { mutableStateOf("") }
+    var csenha by remember { mutableStateOf("") }
+    var isPasswordVisible by remember { mutableStateOf(false) }
+    var isConfirmedPasswordVisible by remember { mutableStateOf(false) }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -79,7 +85,7 @@ fun FormCadastro(navController: NavController) {
                         escolaDestaque = true
                         profissionalDestaque = false
                     },
-                    shape = RoundedCornerShape(12.dp),
+                    shape = RoundedCornerShape(10.dp),
                     colors = if (escolaDestaque) ButtonDefaults.buttonColors(colorResource(id = R.color.bluePrincipal)) else
                         ButtonDefaults.buttonColors(colorResource(id = R.color.white)),
                     border = BorderStroke(1.dp, colorResource(id = R.color.bluePrincipal)),
@@ -102,7 +108,7 @@ fun FormCadastro(navController: NavController) {
                     colors = if (profissionalDestaque) ButtonDefaults.buttonColors(colorResource(id = R.color.bluePrincipal)) else
                         ButtonDefaults.buttonColors(colorResource(id = R.color.white)),
                     border = BorderStroke(1.dp, colorResource(id = R.color.bluePrincipal)),
-                    shape = RoundedCornerShape(12.dp),
+                    shape = RoundedCornerShape(10.dp),
                     modifier = Modifier
                         .width(120.dp)
                         .height(35.dp)
@@ -121,7 +127,7 @@ fun FormCadastro(navController: NavController) {
             placeholder = "Digite o nome da escola",
             modifier = Modifier,
             keyboardType = KeyboardType.Text,
-            atualizarValor = { nome = it}
+            atualizarValor = { nome = it },
         )
         OutlinedTextFieldModel(
             value = areas,
@@ -129,7 +135,7 @@ fun FormCadastro(navController: NavController) {
             placeholder = if (profissionalDestaque) "Digite suas áreas de atuação" else "Digite suas áreas de interesse",
             modifier = Modifier,
             keyboardType = KeyboardType.Text,
-            atualizarValor = { areas = it}
+            atualizarValor = { areas = it }
         )
         OutlinedTextField(
             value = cep,
@@ -139,53 +145,53 @@ fun FormCadastro(navController: NavController) {
                     Text("CEP")
                     Text(
                         text = "*",
-                        color = Color.Red // Cor do asterisco de campo obrigatório
+                        color = Color.Red
                     )
                 }
             },
             keyboardOptions = KeyboardOptions.Default.copy(
-                imeAction = ImeAction.Done
+                imeAction = ImeAction.Done,
+                keyboardType = KeyboardType.Number
             ),
+            shape = RoundedCornerShape(10.dp),
             keyboardActions = KeyboardActions(onDone = {
                 searchCep(cep) { enderecoResult ->
-                    endereco = enderecoResult ?: Endereco("","","","","") // Se o resultado for nulo, cria um endereço vazio
+                    endereco = enderecoResult ?: Endereco(
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    )
                 }
             }),
+
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(8.dp))
         Button(
-            onClick = { searchCep(cep) { enderecoResult ->
-                endereco = enderecoResult ?: Endereco("", "", "", "", "")
-            }
+            onClick = {
+                searchCep(cep) { enderecoResult ->
+                    endereco = enderecoResult ?: Endereco("", "", "", "", "")
+                }
             },
             enabled = cep.isNotBlank(),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth(),
+            shape = RoundedCornerShape(10.dp),
+            colors = if (cep.isNotBlank()) ButtonDefaults.buttonColors(colorResource(id = R.color.bluePrincipal))
+            else ButtonDefaults.buttonColors(colorResource(id = R.color.white))
         ) {
             Text("Buscar Endereço")
         }
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Campos do formulário de endereço
         OutlinedTextField(
-            value = endereco.logradouro?: "",
+            value = endereco.logradouro ?: "",
             onValueChange = { endereco.logradouro = it },
             label = { Text("Endereço") },
-            modifier = Modifier.fillMaxWidth()
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        OutlinedTextField(
-            value = endereco.localidade ?: "",
-            onValueChange = { endereco.localidade = it },
-            label = { Text("Cidade") },
-            modifier = Modifier.fillMaxWidth()
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-
-        OutlinedTextField(
-            value = endereco.uf ?: "",
-            onValueChange = { endereco.uf = it },
-            label = { Text("Estado") },
+            enabled = false,
+            shape = RoundedCornerShape(10.dp),
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(8.dp))
@@ -194,6 +200,28 @@ fun FormCadastro(navController: NavController) {
             value = endereco.bairro ?: "",
             onValueChange = { endereco.bairro = it },
             label = { Text("Bairro") },
+            enabled = false,
+            shape = RoundedCornerShape(10.dp),
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+
+        OutlinedTextField(
+            value = endereco.localidade ?: "",
+            onValueChange = { endereco.localidade = it },
+            label = { Text("Cidade") },
+            enabled = false,
+            shape = RoundedCornerShape(10.dp),
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+
+        OutlinedTextField(
+            value = endereco.uf ?: "",
+            onValueChange = { endereco.uf = it },
+            label = { Text("Estado") },
+            enabled = false,
+            shape = RoundedCornerShape(10.dp),
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(8.dp))
@@ -203,32 +231,64 @@ fun FormCadastro(navController: NavController) {
             label = "E-mail",
             placeholder = "Digite seu e-mail",
             modifier = Modifier,
-            keyboardType = KeyboardType.Text,
-            atualizarValor = { areas = it}
+            keyboardType = KeyboardType.Email,
+            atualizarValor = { areas = it },
+            isMandatory = true
         )
-        OutlinedTextFieldModel(
-            value = senha,
-            label = "Senha",
-            placeholder = "Digite sua senha",
-            modifier = Modifier,
-            keyboardType = KeyboardType.Text,
-            atualizarValor = { areas = it}
-        )
-        OutlinedTextFieldModel(
-            value = csenha,
-            label = "Confirmar senha",
-            placeholder = "Digite novamente sua senha",
-            modifier = Modifier,
-            keyboardType = KeyboardType.Text,
-            atualizarValor = { areas = it}
+        OutlinedTextFieldPassword(
+            senha = senha,
+            onSenhaChange = { novaSenha ->
+                senha = novaSenha
+            },
+            isPasswordVisible = isPasswordVisible,
+            onPasswordVisibilityChange = { visibilidade ->
+                isPasswordVisible = visibilidade
+            },
+            isMandatory = true,
         )
         Spacer(modifier = Modifier.height(8.dp))
+
+        OutlinedTextFieldPassword(
+            senha = csenha,
+            onSenhaChange = { confirmarNovaSenha ->
+                csenha = confirmarNovaSenha
+            },
+            isPasswordVisible = isConfirmedPasswordVisible,
+            onPasswordVisibilityChange = { visibilidade ->
+                isConfirmedPasswordVisible = visibilidade
+            },
+            isConfirmarSenha = true,
+            isMandatory = true
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(
+            onClick = { /*TODO*/ },
+            colors = ButtonDefaults.buttonColors(Color.Transparent),
+            modifier = Modifier
+                .width(270.dp)
+                .background(
+                    brush = Brush.horizontalGradient(
+                        colors = listOf(Color(0xFF3A7CCB), Color(0xFF1A4980)),
+                        startX = 0f,
+                        endX = 900f
+                    ),
+                    shape = RoundedCornerShape(10.dp)
+                )
+        ) {
+            Text(
+                text = "ENVIAR",
+                fontSize = 16.sp,
+                color = Color.White
+            )
+        }
+        Spacer(modifier = Modifier.height(16.dp))
     }
 }
 
 private fun searchCep(cep: String, onResult: (Endereco?) -> Unit) {
     val call = RetrofitFactory().getCepService().getEnderecoByCep(cep = cep)
-    call.enqueue(object: Callback<Endereco> {
+    call.enqueue(object : Callback<Endereco> {
         override fun onResponse(call: Call<Endereco>, response: Response<Endereco>) {
             if (response.isSuccessful) {
                 val endereco = response.body()
@@ -243,6 +303,7 @@ private fun searchCep(cep: String, onResult: (Endereco?) -> Unit) {
         }
     })
 }
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewFormCadastro() {
