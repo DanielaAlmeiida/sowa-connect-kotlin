@@ -124,7 +124,7 @@ fun FormCadastro(navController: NavController) {
         OutlinedTextFieldModel(
             value = nome,
             label = "Nome",
-            placeholder = "Digite o nome da escola",
+            placeholder = if (profissionalDestaque) "Digite o nome do profissional" else "Digite o nome da escola",
             modifier = Modifier,
             keyboardType = KeyboardType.Text,
             atualizarValor = { nome = it },
